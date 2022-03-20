@@ -82,6 +82,8 @@ function pagination_list_footer($list)
  */
 function pagination_list_render($list)
 {
+    $app = Factory::getContainer()->get(Joomla\CMS\Application\SiteApplication::class);
+
     $currentId = 0;
     $range = 3;
 
@@ -91,7 +93,7 @@ function pagination_list_render($list)
         }
     }
 
-    $template = Factory::getApplication('site')->getTemplate(true);
+    $template = $app->getTemplate(true);
     $paginationTitles = $template->params->get('paginationtitles', 0);
     if ($currentId > 1 && $paginationTitles > 0) {
         if ($paginationTitles == 1) {
@@ -99,10 +101,10 @@ function pagination_list_render($list)
         } else {
             $sfx = ' (' . Text::sprintf('JLIB_HTML_PAGE_CURRENT_OF_TOTAL', $currentId, count($list['pages'])) . ')';
         }
-        $doc = Factory::getDocument();
+        $doc = $app->getDocument();
 
-        $sitename = Factory::getConfig()->get('sitename');
-        $pageTitlesMode = Factory::getConfig()->get('sitename_pagetitles');
+        $sitename = $app->getConfig()->get('sitename');
+        $pageTitlesMode = $app->getConfig()->get('sitename_pagetitles');
 
         $pageTitle = $doc->getTitle();
         if ($pageTitlesMode == 2) {
@@ -157,7 +159,9 @@ function pagination_list_render($list)
  */
 function pagination_item_active(&$item)
 {
-    $template = Factory::getApplication('site')->getTemplate(true);
+    $app = Factory::getContainer()->get(Joomla\CMS\Application\SiteApplication::class);
+
+    $template = $app->getTemplate(true);
     $jsIcons = $template->params->get('jsIcons', 'none');
 
     $cls = '';
