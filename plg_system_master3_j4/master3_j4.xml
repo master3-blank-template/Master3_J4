@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<extension type="plugin" version="4.0" method="upgrade" group="system">
+    <name>PLG_MASTER3_J4</name>
+    <author>Aleksey A. Morozov</author>
+    <authorEmail>alekvolsk@yandex.ru</authorEmail>
+    <authorUrl>https://alekvolsk.pw</authorUrl>
+    <copyright>(C) Aleksey A. Morozov. All right reserved.</copyright>
+    <license>GNU General Public License version 3 or later; see http://www.gnu.org/licenses/gpl-3.0.txt</license>
+    <creationDate>March 2022</creationDate>
+    <version>1.0.0</version>
+    <description>PLG_MASTER3_J4_DESC</description>
+    <scriptfile>script.php</scriptfile>
+    <files>
+        <filename plugin="master3_j4">master3_j4.php</filename>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_system_master3_j4.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_system_master3_j4.sys.ini</language>
+    </languages>
+</extension>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="4.0" type="template" client="site" method="upgrade">
+    <name>Master3_J4</name>
+    <version>0.1.0</version>
+    <creationDate>March 2022</creationDate>
+    <author>Aleksey A. Morozov</author>
+    <authorEmail>alekvolsk@yandex.ru</authorEmail>
+    <authorUrl>https://master3.alekvolsk.info/</authorUrl>
+    <copyright>Copyright (C) 2020 Aleksey A. Morozov. All rights reserved.</copyright>
+    <license>GNU GPL v3 or later; see http://www.gnu.org/licenses/gpl-3.0.txt</license>
+    <description><![CDATA[
+        <span style="display:inline-flex;align-items:center;margin:30px 0;color:#1E87F0;text-decoration:none;"><svg height="50" viewBox="0 0 122 141" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M61 0L84.6129 13.6266L61 27.2631L37.3871 13.6266L61 0ZM97.4032 21.0155L73.7805 34.6421L98.3871 48.8492V77.2634L122 63.6368V35.2127L97.4032 21.0155ZM36.3934 99.4005V126.664L61 140.871L84.6129 127.244L36.3934 99.4005ZM73.7805 106.229C73.7805 106.229 65.0339 101.181 97.3934 119.855H97.4032L122 105.658V78.385L73.7805 106.229ZM0 105.658V48.8689L23.6129 62.5053V119.285L0 105.658Z" fill="#1E87F0"/></svg><span style="margin-left:20px;font-weight:400;"><span style="display:block;font-size:20px;line-height:20px;margin-bottom:10px;"><strong>Master3</strong></span><span style="display:block;font-size:15px;line-height:20px;"><strong>The Joomla! 4 site template based on UIkit 3.</strong></span></span></span>
+        <span style="display:block;margin-bottom:20px;">
+            <img src="https://img.shields.io/badge/VERSION-0.1.0_beta-28A5F5.svg?style=for-the-badge" alt="Master3 version" style="margin-right:10px">
+            <a href="https://master3.alekvolsk.info/" target="_blank" style="margin-right:10px"><img src="https://img.shields.io/badge/-official_page-28A5F5.svg?style=for-the-badge" alt="Official page"></a>
+            <a href="https://master3.alekvolsk.info/documentation" target="_blank" style="margin-right:10px"><img src="https://img.shields.io/badge/-documentation-28A5F5.svg?style=for-the-badge" alt="Documentation"></a>
+            <a href="https://master3.alekvolsk.info/positions" target="_blank"><img src="https://img.shields.io/badge/-positions-28A5F5.svg?style=for-the-badge" alt="Positions"></a>
+        </span>
+        <span style="display:block;margin-bottom:30px;font-weight:400">
+            <span style="display:block;margin-bottom:10px;">&copy; <a href="https://alekvolsk.pw" target="_blank"><u>Aleksey A. Morozov</u></a>. All rights reserved.</span>
+            <span style="display:block;margin-bottom:10px;">If you want to support the project, you can donate us via <a href="https://www.paypal.me/alekvolsk" target="_blank"><u>PayPal</u></a> or <a href="https://yoomoney.ru/to/410011461392459" target="_blank">YooMoney</a>.</span>
+            <span style="display:block;">The template changelog is available on the <a href="https://master3.alekvolsk.info/download" target="_blank"><u>download page</u></a>.</span>
+        </span>
+    ]]></description>
+    <php_minimum>7.2</php_minimum>
+    <uikit_actual>3.13.1</uikit_actual>
+    <scriptfile>script.php</scriptfile>
+
+    <files>
+        <filename>config.php</filename>
+        <filename>index.php</filename>
+        <filename>component.php</filename>
+        <filename>component_ajax.php</filename>
+        <filename>error.php</filename>
+        <filename>offline.php</filename>
+        <filename>apple-touch-icon.png</filename>
+        <filename>favicon.png</filename>
+        <filename>template_preview.png</filename>
+        <filename>template_thumbnail.png</filename>
+        <filename>templateDetails.xml</filename>
+        <folder>html</folder>
+        <folder>layouts</folder>
+    </files>
+
+    <positions>
+        <position>toolbar-left</position>
+        <position>toolbar-right</position>
+        <position>logo</position>
+        <position>headbar</position>
+        <position>navbar-left</position>
+        <position>navbar-center</position>
+        <position>navbar-right</position>
+        <position>breadcrumb</position>
+        <position>main-top</position>
+        <position>main-bottom</position>
+        <position>sidebar-a</position>
+        <position>sidebar-b</position>
+        <position>block-a</position>
+        <position>block-b</position>
+        <position>block-c</position>
+        <position>block-d</position>
+        <position>block-e</position>
+        <position>block-f</position>
+        <position>block-g</position>
+        <position>block-h</position>
+        <position>block-i</position>
+        <position>block-k</position>
+        <position>footer-left</position>
+        <position>footer-center</position>
+        <position>footer-right</position>
+        <position>offcanvas</position>
+        <position>offcanvas-menu</position>
+    </positions>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.tpl_master3_j4.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.tpl_master3_j4.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+
+            <fieldset name="basic" label="TPL_MASTER3_TAB_BASIC_LABEL">
+                <field name="templateLayouts" type="sflayouts"
+                    label="TPL_MASTER3_TEMPLATELAYOUTS_LABEL"
+                    layout="joomla.form.field.subform.repeatable-table"
+                    groupByFieldset="false" multiple="true" buttons="none"
+                >
+                    <form>
+                        <fieldset>
+                            <field name="name" type="text" label="TPL_MASTER3_LAYOUTS_FORM_LNAME" readonly="true" />
+                            <field name="menuassign" type="menuitem" label="TPL_MASTER3_LAYOUTS_FORM_MENUASSIGN" default="" class="input-xxlarge" multiple="true" />
+                        </fieldset>
+                    </form>
+                </field>
+                <field name="spacerLauouts" type="spacer" hr="true" />
+
+                <field name="noteLogo" type="note" label="TPL_MASTER3_SUBTITLE_LOGO" />
+                <field name="logoFile" type="media" label="TPL_MASTER3_LOGO_LABEL" description="TPL_MASTER3_LOGO_DESC" default="" />
+                <field name="siteTitle" type="text" label="TPL_MASTER3_TITLE_LABEL" description="TPL_MASTER3_TITLE_DESC" default="" filter="string" />
+                <field name="spacerLogo" type="spacer" hr="true" />
+
+                <field name="noteIcons" type="note" label="TPL_MASTER3_SUBTITLE_ICONS" />
+                <field name="favicon" type="media" label="TPL_MASTER3_FAVICON_LABEL" default="" />
+                <field name="faviconApple" type="media" label="TPL_MASTER3_FAVICONAPPLE_LABEL" default="" />
+                <field name="spacerIcons" type="spacer" hr="true" />
+
+                <field name="totop" type="radio" label="TPL_MASTER3_TOTOP_LABEL" default="1" layout="joomla.form.field.radio.switcher" filter="boolean">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="offlineLoginForm" type="radio" label="TPL_MASTER3_OLF_LABEL" default="1" layout="joomla.form.field.radio.switcher" filter="boolean">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="denyUserAuthorization" type="radio" label="TPL_MASTER3_DUA_LABEL" default="0" layout="joomla.form.field.radio.switcher" filter="boolean">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="paginationtitles" type="list" label="TPL_MASTER3_PAGINATIONTITLES_LABEL" description="TPL_MASTER3_PAGINATIONTITLES_DESC" default="0">
+                    <option value="0">TPL_MASTER3_PAGINATIONTITLES_0</option>
+                    <option value="1">TPL_MASTER3_PAGINATIONTITLES_1</option>
+                    <option value="2">TPL_MASTER3_PAGINATIONTITLES_2</option>
+                </field>
+                <field name="spacerSM" type="spacer" hr="true" />
+
+                <field name="systemmsg" type="list" label="TPL_MASTER3_SYSTEMMSG_LABEL" default="alert">
+                    <option value="alert">TPL_MASTER3_SYSTEMMSG_ALERT</option>
+                    <option value="notify">TPL_MASTER3_SYSTEMMSG_NOTIFY</option>
+                </field>
+                <field name="systemmsgPos" type="list" label="TPL_MASTER3_SYSTEMMSG_NOTIFYPOS_LABEL" default="top-right" showon="systemmsg:notify">
+                    <option value="top-left">TPL_MASTER3_SYSTEMMSG_NOTIFYPOS_TOP_LEFT</option>
+                    <option value="top-center">TPL_MASTER3_SYSTEMMSG_NOTIFYPOS_TOP_CENTER</option>
+                    <option value="top-right">TPL_MASTER3_SYSTEMMSG_NOTIFYPOS_TOP_RIGHT</option>
+                    <option value="bottom-left">TPL_MASTER3_SYSTEMMSG_NOTIFYPOS_BOTTOM_LEFT</option>
+                    <option value="bottom-center">TPL_MASTER3_SYSTEMMSG_NOTIFYPOS_BOTTOM_CENTER</option>
+                    <option value="bottom-right">TPL_MASTER3_SYSTEMMSG_NOTIFYPOS_BOTTOM_RIGHT</option>
+                </field>
+                <field name="systemmsgTimeout" type="text" label="TPL_MASTER3_SYSTEMMSG_NOTIFYT_TIMEOUT_LABEL" default="5" class="input-small" showon="systemmsg:notify" />
+            </fieldset>
+
+            <fieldset name="head" label="TPL_MASTER3_TAB_HEAD_LABEL">
+                <field name="noteCSS" type="note" label="TPL_MASTER3_SUBTITLE_CSS" />
+                <field name="cssUikit" type="list" label="TPL_MASTER3_CSS_UIKIT_LABEL" default="uikit.min.css">
+                    <option value="none">TPL_MASTER3_CSS_UIKIT_NO</option>
+                    <option value="uikit.css">TPL_MASTER3_CSS_UIKIT_BASED</option>
+                    <option value="uikit.min.css">TPL_MASTER3_CSS_UIKIT_MINIFIED</option>
+                    <option value="uikit-rtl.css">TPL_MASTER3_CSS_UIKIT_RTL</option>
+                    <option value="uikit-rtl.min.css">TPL_MASTER3_CSS_UIKIT_RTLMINIFIED</option>
+                </field>
+                <field name="cssCustom" type="radio" label="TPL_MASTER3_CSS_CUSTOM_LABEL" default="0" layout="joomla.form.field.radio.switcher" filter="boolean">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="cssAddons" type="textarea" label="TPL_MASTER3_CSS_ADDONS_LABEL" description="TPL_MASTER3_CSS_ADDONS_DESC" rows="3" default="" class="input-xxlarge" />
+                <field name="cssGotoBottom" type="radio" label="TPL_MASTER3_CSS_GOTO_BOTTOM_LABEL" default="0" layout="joomla.form.field.radio.switcher" filter="boolean">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="spacerCSS" type="spacer" hr="true" />
+
+                <field name="noteJS" type="note" label="TPL_MASTER3_SUBTITLE_JS" />
+                <field name="jsJQ" type="radio" label="TPL_MASTER3_JS_JQ_LABEL" default="0" layout="joomla.form.field.radio.switcher" filter="boolean">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="jsUikit" type="list" label="TPL_MASTER3_JS_UIKIT_LABEL" default="uikit.min.js">
+                    <option value="none">TPL_MASTER3_JS_UIKIT_NO</option>
+                    <option value="uikit.js">TPL_MASTER3_JS_UIKIT_BASED</option>
+                    <option value="uikit.min.js">TPL_MASTER3_JS_UIKIT_MINIFIED</option>
+                </field>
+                <field name="jsIcons" type="list" label="TPL_MASTER3_JS_ICONS_LABEL" default="uikit-icons.min.js">
+                    <option value="none">TPL_MASTER3_JS_ICONS_NO</option>
+                    <option value="uikit-icons.js">TPL_MASTER3_JS_ICONS_BASED</option>
+                    <option value="uikit-icons.min.js">TPL_MASTER3_JS_ICONS_MINIFIED</option>
+                </field>
+                <field name="jsCustom" type="radio" label="TPL_MASTER3_JS_CUSTOM_LABEL" default="0" layout="joomla.form.field.radio.switcher" filter="boolean">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="jsAddons" type="textarea" label="TPL_MASTER3_JS_ADDONS_LABEL" description="TPL_MASTER3_JS_ADDONS_DESC" rows="3" default="" class="input-xxlarge" />
+                <field name="jsGotoBottom" type="radio" label="TPL_MASTER3_JS_GOTO_BOTTOM_LABEL" default="0" layout="joomla.form.field.radio.switcher" filter="boolean">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </fieldset>
+
+        </fields>
+    </config>
+
+</extension>
