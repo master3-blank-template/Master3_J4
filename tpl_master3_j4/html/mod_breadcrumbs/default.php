@@ -39,10 +39,11 @@ for ($i = 0; $i < $count; $i++) {
 
     if ($i < $count - 1) {
         if (!empty($list[$i]->link)) {
-            $link = explode('?', $list[$i]->link)[0];
+            $link = Route::_($list[$i]->link, true, Route::TLS_IGNORE, true);
+            $link = explode('?', $link)[0];
             echo '<li itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem"><a itemprop="item" content="' . $linkRoot . $link . '" href="' . $link . '"><span itemprop="name">' . $name . '</span></a>' . $meta . '</li>';
         } else {
-            echo '<li itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem"><span itemprop="item" content="' . $linkRoot . $link . '"><span itemprop="name">' . $name . '</span></span>' . $meta . '</li>';
+            echo '<li itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem"><span itemprop="item" content="' . $linkRoot . '"><span itemprop="name">' . $name . '</span></span>' . $meta . '</li>';
         }
     } else {
         echo '<li itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem"><span itemprop="item" content="' . $linkCurrent . '"><span itemprop="name">' . $name . '</span></span>' . $meta . '</li>';

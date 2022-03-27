@@ -24,7 +24,7 @@ $containerClass = 'uk-container';
  */
 if ($this->countModules('toolbar-left') || $this->countModules('toolbar-right')) {
     ?>
-<div role="toolbar" id="section-toolbar" class="<?php echo $sectionClass; ?>">
+<div role="toolbar" id="section-toolbar" class="uk-section uk-section-small">
     <div class="<?php echo $containerClass; ?>">
         <div class="uk-flex uk-flex-middle uk-flex-between">
 
@@ -50,7 +50,7 @@ if ($this->countModules('toolbar-left') || $this->countModules('toolbar-right'))
 $logo = master3_getLogo($this->params);
 if ($this->countModules('headbar') || $logo !== '') {
     ?>
-<header id="<?php echo $section->id; ?>" class="<?php echo $sectionClass; ?>">
+<header id="section-headbar" class="uk-section uk-section-small">
     <div class="<?php echo $containerClass; ?>">
         <div data-uk-grid>
 
@@ -100,7 +100,7 @@ if (
             </div>
                 <?php } ?>
             <div class="uk-navbar-left<?php echo ($navbarMenuMode->left ? ' uk-visible' . $menuResponsive : ''); ?>">
-                <jdoc:include type="modules" name="navbar-left" style="master3lite" />
+                <jdoc:include type="modules" name="navbar-left" style="<?php echo $navbarMenuMode->leftStyle; ?>" />
             </div>
             <?php } ?>
 
@@ -116,7 +116,7 @@ if (
             <div class="uk-navbar-center<?php echo ($navbarMenuMode->center
                 ? ' uk-visible' . $menuResponsive : ''); ?>"
             >
-                <jdoc:include type="modules" name="navbar-center" style="master3lite" />
+                <jdoc:include type="modules" name="navbar-center" style="<?php echo $navbarMenuMode->centerStyle; ?>" />
             </div>
             <?php } ?>
 
@@ -132,7 +132,7 @@ if (
             <div class="uk-navbar-right<?php echo ($navbarMenuMode->right
                 ? ' uk-visible' . $menuResponsive : ''); ?>"
             >
-                <jdoc:include type="modules" name="navbar-right" style="master3lite" />
+                <jdoc:include type="modules" name="navbar-right" style="<?php echo $navbarMenuMode->rightStyle; ?>" />
             </div>
             <?php } ?>
 
@@ -144,13 +144,44 @@ if (
 
 <?php
 /*
+ * block-[a-e]
+ */
+$blockSections = ['block-a', 'block-b', 'block-c', 'block-d', 'block-e'];
+$blockSectionsSfx = [];
+$blockSectionsSfxLast = '';
+foreach (array_reverse($blockSections) as $block) {
+    if ($this->countModules($block)) {
+        $blockSectionsSfxLast = $blockSectionsSfxLast ? '' : ' uk-section-muted';
+        $blockSectionsSfx[$block] = $blockSectionsSfxLast;
+    }
+}
+foreach ($blockSections as $blockSection) {
+    if ($sectionPosCount = $this->countModules($blockSection)) {
+        $sectionPosCount = $sectionPosCount > 6 ? 6 : $sectionPosCount;
+        $sectionGridClass = 'uk-child-width-1-' . $sectionPosCount . '@m';
+        ?>
+<section id="section-<?php echo $blockSection; ?>" class="<?php echo $sectionClass . $blockSectionsSfx[$blockSection]; ?>">
+    <div class="<?php echo $containerClass; ?>">
+        <div class="<?php echo $sectionGridClass; ?>" data-uk-grid>
+            <jdoc:include type="modules" name="<?php echo $blockSection; ?>" style="master3" />
+        </div>
+    </div>
+</section>
+        <?php
+    }
+}
+?>
+
+
+<?php
+/*
  * breadcrumb
  */
 if ($this->countModules('breadcrumb')) {
     ?>
-<div role="navigation" id="section-breadcrumb" class="<?php echo $sectionClass; ?>">
+<div role="navigation" id="section-breadcrumb" class="uk-section uk-section-xsmall">
     <div class="<?php echo $containerClass; ?>">
-        <jdoc:include type="modules" name="breadcrumb" style="none" />
+        <jdoc:include type="modules" name="breadcrumb" style="empty" />
     </div>
 </div>
 <?php } ?>
@@ -162,30 +193,6 @@ if ($this->countModules('breadcrumb')) {
  */
 ?>
 <jdoc:include type="message" />
-
-
-<?php
-/*
- * block-[a-e]
- */
-$blockSections = ['block-a', 'block-b', 'block-c', 'block-d', 'block-e'];
-foreach ($blockSections as $blockSection) {
-    if ($sectionPosCount = $this->countModules($blockSection)) {
-        $sectionPosCount = $sectionPosCount > 6 ? 6 : $sectionPosCount;
-        $section = $config->getSectionParams($blockSection);
-        $sectionGridClass = 'uk-child-width-1-' . $sectionPosCount . '@m';
-        ?>
-<section id="section-<?php echo $blockSection; ?>" class="<?php echo $sectionClass; ?>">
-    <div class="<?php echo $containerClass; ?>">
-        <div class="<?php echo $sectionGridClass; ?>" data-uk-grid>
-            <jdoc:include type="modules" name="<?php echo $blockSection; ?>" style="master3" />
-        </div>
-    </div>
-</section>
-        <?php
-    }
-}
-?>
 
 
 <?php
@@ -259,7 +266,7 @@ if ($systemOutput || $countMainTop || $countMainBottom || $countSidebarA || $cou
             ?>
 
             <?php if ($countSidebarA) { ?>
-            <aside class="uk-width-<?php echo $sidebarGridSize . $responsive; ?>">
+            <aside class="uk-width-<?php echo $sidebarGridSize . $responsive; ?> uk-flex-first">
                 <div class="uk-child-width-1-1" data-uk-grid>
                     <jdoc:include type="modules" name="sidebar-a" style="master3" />
                 </div>
@@ -284,13 +291,14 @@ if ($systemOutput || $countMainTop || $countMainBottom || $countSidebarA || $cou
  * block-[f-k]
  */
 $blockSections = ['block-f', 'block-g', 'block-h', 'block-i', 'block-k'];
+$blockSectionsSfxLast = '';
 foreach ($blockSections as $blockSection) {
     if ($sectionPosCount = $this->countModules($blockSection)) {
         $sectionPosCount = $sectionPosCount > 6 ? 6 : $sectionPosCount;
-        $section = $config->getSectionParams($blockSection);
         $sectionGridClass = 'uk-child-width-1-' . $sectionPosCount . '@m';
+        $blockSectionsSfxLast = $blockSectionsSfxLast ? '' : ' uk-section-muted';
         ?>
-<section id="section-<?php echo $blockSection; ?>" class="<?php echo $sectionClass; ?>">
+<section id="section-<?php echo $blockSection; ?>" class="<?php echo $sectionClass . $blockSectionsSfxLast; ?>">
     <div class="<?php echo $containerClass; ?>">
         <div class="<?php echo $sectionGridClass; ?>" data-uk-grid>
             <jdoc:include type="modules" name="<?php echo $blockSection; ?>" style="master3" />

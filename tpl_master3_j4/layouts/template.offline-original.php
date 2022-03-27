@@ -16,16 +16,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Helper\AuthenticationHelper;
 
+include_once(__DIR__ . '/../config.php');
+
+master3_setHead($this, false);
+
 $app = Factory::getContainer()->get(Joomla\CMS\Application\SiteApplication::class);
 $twofactormethods = AuthenticationHelper::getTwoFactorMethods();
-
-$favicon = $this->params->get('favicon');
-$favicon = $favicon ?: 'templates/' . $app->getTemplate()->template . '/favicon.png';
-$this->addFavicon(Uri::base(true) . '/' . $favicon, 'image/png', 'shortcut icon');
-
-$faviconApple = $this->params->get('faviconApple');
-$faviconApple = $faviconApple ?: 'templates/' . $app->getTemplate()->template . '/apple-touch-icon.png';
-$this->addHeadLink(Uri::base(true) . '/' . $faviconApple, 'apple-touch-icon-precomposed');
 
 ?>
 <!DOCTYPE html>
@@ -38,7 +34,10 @@ $this->addHeadLink(Uri::base(true) . '/' . $faviconApple, 'apple-touch-icon-prec
         <div class="uk-container" style="max-width:400px;">
             <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
 
-                <div class="uk-logo"><?php echo $config->getLogo(); ?></div>
+                <div class="uk-logo">
+                    <?php echo master3_getLogo($this->params); ?>
+                    <h1 class="uk-h2"><?php echo $app->getConfig()->get('sitename'); ?></h1>
+                </div>
 
                 <?php if ($app->get('offline_image') && file_exists($app->get('offline_image'))) { ?>
                 <img class="uk-margin-medium-top"

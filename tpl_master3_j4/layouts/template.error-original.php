@@ -21,7 +21,7 @@ $isBacktrace = $errorLevelStr === 'maximum';
 $errorCode = $this->error->getCode();
 $errorFile = str_replace(JPATH_ROOT, 'JROOT', $this->error->getFile());
 
-$title = $this->title . ' – ' . htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8');
+$title = $app->getConfig()->get('sitename', $this->template);
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -39,7 +39,7 @@ $title = $this->title . ' – ' . htmlspecialchars($this->error->getMessage(), E
 
     <header class="uk-section uk-section-default uk-section-small">
         <div class="uk-container">
-            <div class="uk-logo"><?php echo $app->getConfig()->get('sitename', $this->template); ?></div>
+            <div class="uk-logo"><?php echo $title; ?></div>
         </div>
     </header>
 
@@ -68,7 +68,7 @@ $title = $this->title . ' – ' . htmlspecialchars($this->error->getMessage(), E
                     <?php echo Text::_('JERROR_LAYOUT_PLEASE_CONTACT_THE_SYSTEM_ADMINISTRATOR'); ?>
                 </div>
 
-                <div class="uk-h3">
+                <div class="uk-h4">
                     <?php echo $errorCode, ': ', htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?>
                 </div>
 
