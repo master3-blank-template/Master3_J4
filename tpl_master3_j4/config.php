@@ -14,6 +14,12 @@ use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Helper\ModuleHelper;
 
+/**
+ * master3_getTemplateName
+ * Get current template name
+ *
+ * @return string
+ */
 function master3_getTemplateName()
 {
     $template = Joomla\CMS\Factory::getContainer()
@@ -24,6 +30,12 @@ function master3_getTemplateName()
     return $template;
 }
 
+/**
+ * master3_getMenuItemActiveId
+ * Get the ID of the active menu item
+ *
+ * @return int
+ */
 function master3_getMenuItemActiveId()
 {
     $app = Factory::getContainer()->get(Joomla\CMS\Application\SiteApplication::class);
@@ -34,6 +46,13 @@ function master3_getMenuItemActiveId()
     return isset($menuItem) ? $menuItem->id : $menuDefault->id;
 }
 
+/**
+ * master3_getLayout
+ * Get layout for active page
+ *
+ * @param  object $params
+ * @return string
+ */
 function master3_getLayout($params)
 {
     $layouts = $params->get('templateLayouts', []);
@@ -42,9 +61,9 @@ function master3_getLayout($params)
     $templateName = master3_getTemplateName();
     $menuActiveId = master3_getMenuItemActiveId();
 
-    foreach ($layouts as $name => $items) {
-        if (in_array($menuActiveId, $items)) {
-            $layout = $name;
+    foreach ($layouts as $items) {
+        if (in_array($menuActiveId, $items->menuassign)) {
+            $layout = $items->name;
             break;
         }
     }
@@ -59,6 +78,12 @@ function master3_getLayout($params)
     return $layout;
 }
 
+/**
+ * master3_getSystemOutput
+ * Get component output if any
+ *
+ * @return string
+ */
 function master3_getSystemOutput()
 {
     $app = Factory::getContainer()->get(Joomla\CMS\Application\SiteApplication::class);
@@ -73,54 +98,13 @@ function master3_getSystemOutput()
     return $clean ? $out : '';
 }
 
-function master3_setHead($template)
-{
-    $templateName = master3_getTemplateName();
-
-    $template->setHtml5(true);
-    $template->setGenerator('');
-    $template->setMetaData('viewport', 'width=device-width,initial-scale=1');
-    $template->setMetaData('X-UA-Compatible', 'IE=edge', 'http-equiv');
-
-    // include UIkit css
-    $cssUikit = $template->params->get('cssUikit', 'uikit.min.css');
-    if ($cssUikit !== 'none') {
-        $isRTL = strpos($cssUikit, 'rtl') !== false;
-        $isMin = strpos($cssUikit, 'min') !== false;
-        HTMLHelper::_('uikit3.css', $isRTL, $isMin);
-    }
-
-    // include jQuery
-    if ($template->params->get('jsJQ', false)) {
-        HTMLHelper::_('jquery.framework', true, null, false);
-    }
-
-    // inclide UIkit js
-    $jsUikit = $template->params->get('jsUikit', 'uikit.min.js');
-    if ($jsUikit !== 'none') {
-        $isMin = strpos($jsUikit, 'min') !== false;
-        HTMLHelper::_('uikit3.js', $isMin);
-    }
-
-    // include UIkit icons js
-    $jsIcons = $template->params->get('jsIcons', 'uikit-icons.min.js');
-    if ($jsIcons !== 'none') {
-        $isMin = strpos($jsIcons, 'min') !== false;
-        HTMLHelper::_('uikit3.icons', $isMin);
-    }
-
-    // include browser's icons
-    $template->addFavicon(
-        Uri::base(true) . '/templates/' . $templateName . '/favicon.png',
-        'image/png',
-        'shortcut icon'
-    );
-    $template->addHeadLink(
-        Uri::base(true) . '/templates/' . $templateName . '/apple-touch-icon.png',
-        'apple-touch-icon-precomposed'
-    );
-}
-
+/**
+ * master3_getMime
+ * Get mime type of file
+ *
+ * @param  string $file
+ * @return string
+ */
 function master3_getMime($file)
 {
     if (function_exists('mime_content_type')) {
@@ -165,7 +149,124 @@ function master3_getMime($file)
     }
 }
 
+/**
+ * master3_setHead
+ * Set head's includes for current page
+ *
+ * @param  object $template
+ * @param  bool   $index
+ * @return void
+ */
+function master3_setHead($template, $index = true)
+{
+    $templateName = master3_getTemplateName();
 
+    $template->setHtml5(true);
+    $template->setGenerator('');
+    $template->setMetaData('viewport', 'width=device-width,initial-scale=1');
+    $template->setMetaData('X-UA-Compatible', 'IE=edge', 'http-equiv');
+
+    // include UIkit css
+    $cssUikit = $template->params->get('cssUikit', 'uikit.min.css');
+    if ($cssUikit !== 'none') {
+        $isRTL = strpos($cssUikit, 'rtl') !== false;
+        $isMin = strpos($cssUikit, 'min') !== false;
+        HTMLHelper::_('uikit3.css', $isRTL, $isMin);
+    }
+
+    // include additional styles
+    if ($index) {
+        $cssAddons = explode("\n", $template->params->get('cssAddons', ''));
+        foreach ($cssAddons as $css) {
+            $css = ltrim(trim($css), '/');
+            $cssFile = Path::clean(JPATH_BASE . '/' . $css);
+            if (is_file($cssFile)) {
+                HTMLHelper::_('stylesheet', $css, [], ['version' => 'auto', 'relative' => true]);
+            }
+        }
+
+        // include custom.css
+        $cssCustom = (bool)$template->params->get('cssCustom', false);
+        $css = 'templates/' . $templateName . '/css/custom.css';
+        if ($cssCustom && is_file(Path::clean(JPATH_BASE . '/' . $css))) {
+            HTMLHelper::_('stylesheet', $css, [], ['version' => 'auto', 'relative' => true]);
+        }
+    }
+
+
+    // include jQuery
+    if ($template->params->get('jsJQ', false)) {
+        HTMLHelper::_('jquery.framework', true, null, false);
+    }
+
+    // inclide UIkit js
+    $jsUikit = $template->params->get('jsUikit', 'uikit.min.js');
+    if ($jsUikit !== 'none') {
+        $isMin = strpos($jsUikit, 'min') !== false;
+        HTMLHelper::_('uikit3.js', $isMin);
+    }
+
+    // include UIkit icons js
+    $jsIcons = $template->params->get('jsIcons', 'uikit-icons.min.js');
+    if ($jsIcons !== 'none') {
+        $isMin = strpos($jsIcons, 'min') !== false;
+        HTMLHelper::_('uikit3.icons', $isMin);
+    }
+
+    // include additional scripts
+    if ($index) {
+        $jsAddons = explode("\n", $template->params->get('jsAddons', ''));
+        foreach ($jsAddons as $js) {
+            $js = ltrim(trim($js), '/');
+            $jsFile = Path::clean(JPATH_BASE . '/' . $js);
+            if (is_file($jsFile)) {
+                HTMLHelper::_('script', $js, [], ['version' => 'auto', 'relative' => true]);
+            }
+        }
+
+        // include custom.css
+        $jsCustom = (bool)$template->params->get('jsCustom', false);
+        $js = 'templates/' . $templateName . '/js/custom.js';
+        if ($jsCustom && is_file(Path::clean(JPATH_BASE . '/' . $js))) {
+            HTMLHelper::_('script', $js, [], ['version' => 'auto', 'relative' => true]);
+        }
+    }
+
+
+    // include browser's icons
+    $favicon = $template->params->get('favicon', '');
+    $favicon = $favicon ? HTMLHelper::_('cleanImageURL', $favicon)->url : '';
+    $faviconFile = Path::clean(JPATH_BASE . '/' . $favicon);
+    $faviconMime = master3_getMime($faviconFile);
+    if (!is_file($faviconFile)) {
+        $favicon = 'templates/' . $templateName . '/favicon.png';
+        $faviconMime = 'image/png';
+    }
+    $template->addFavicon(
+        Uri::base(true) . '/' . $favicon,
+        $faviconMime,
+        'shortcut icon'
+    );
+
+    $ati = $template->params->get('faviconApple', '');
+    $ati = $favicon ? HTMLHelper::_('cleanImageURL', $ati)->url : '';
+    $atiFile = Path::clean(JPATH_BASE . '/' . $ati);
+    if (!is_file($atiFile)) {
+        $ati = 'templates/' . $templateName . '/apple-touch-icon.png';
+    }
+    $template->addHeadLink(
+        Uri::base(true) . '/' . $ati,
+        'apple-touch-icon-precomposed'
+    );
+}
+
+/**
+ * master3_getLogo
+ * Get logo HTML
+ *
+ * @param  object $params
+ * @return string
+ */
 function master3_getLogo($params)
 {
     $app = Factory::getContainer()->get(Joomla\CMS\Application\SiteApplication::class);
@@ -188,6 +289,7 @@ function master3_getLogo($params)
         $out .= "</{$logotag}>";
     } else {
         $logoFile = $params->get('logoFile', '');
+        $logoFile = $logoFile ? HTMLHelper::_('cleanImageURL', $logoFile)->url : '';
         $siteTitle = $params->get('siteTitle', '');
 
         if ($logoFile || $siteTitle) {
@@ -217,6 +319,12 @@ function master3_getLogo($params)
     return $out;
 }
 
+/**
+ * master3_getNavbarMode
+ * Get module output parameters for positions in the navbar section
+ *
+ * @return object
+ */
 function master3_getNavbarMode()
 {
     $app = Factory::getContainer()->get(Joomla\CMS\Application\SiteApplication::class);
@@ -233,6 +341,7 @@ function master3_getNavbarMode()
         }
     }
     $obj->left = $isNavbarMenu && $isOffcanvas;
+    $obj->leftStyle = $obj->left ? 'navbar' : 'master3';
 
     // ckeck menu in 'navbar-center' position
     if (!$isNavbarMenu) {
@@ -246,6 +355,7 @@ function master3_getNavbarMode()
     } else {
         $obj->center = false;
     }
+    $obj->centerStyle = $obj->center ? 'navbar' : 'master3';
 
     // ckeck menu in 'navbar-right' position
     if (!$isNavbarMenu) {
@@ -259,6 +369,7 @@ function master3_getNavbarMode()
     } else {
         $obj->right = false;
     }
+    $obj->rightStyle = $obj->right ? 'navbar' : 'master3';
 
     return $obj;
 }

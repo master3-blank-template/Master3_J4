@@ -72,6 +72,28 @@ class master3_j4InstallerScript
             $msg .= Text::sprintf('TPL_MASTER3_UIKIT3_INSTALLATION_ERROR', $res);
         }
 
+        $customCss = Path::clean(JPATH_ROOT . '/templates/master3_j4/css/custom.css');
+        if (!file_exists($customCss)) {
+            try {
+                $dir = pathinfo($customCss, PATHINFO_DIRNAME);
+                if (!is_dir($dir)) {
+                    mkdir($dir);
+                    file_put_contents($customCss, "/* Master3_J4 custom CSS */\n");
+                }
+            } catch (\Exception $e) {}
+        }
+
+        $customJs = Path::clean(JPATH_ROOT . '/templates/master3_j4/js/custom.js');
+        if (!file_exists($customJs)) {
+            try {
+                $dir = pathinfo($customJs, PATHINFO_DIRNAME);
+                if (!is_dir($dir)) {
+                    mkdir($dir);
+                    file_put_contents($customJs, "/* Master3_J4 custom JS */\n");
+                }
+            } catch (\Exception $e) {}
+        }
+
         if ($msg) {
             $app = Factory::getContainer()->get(Joomla\CMS\Application\AdministratorApplication::class);
             $app->enqueueMessage($msg, 'error');
@@ -95,7 +117,9 @@ class master3_j4InstallerScript
             $path['src']  = Path::clean($folder . $fo);
             $path['dest'] = Path::clean($folder . $f);
             $path['type'] = 'file';
-            $copyFiles[] = $path;
+            if (!file_exists($path['dest'])) {
+                $copyFiles[] = $path;
+            }
         }
 
         return $installer->copyFiles($copyFiles);
