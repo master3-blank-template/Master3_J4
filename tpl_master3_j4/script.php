@@ -122,6 +122,10 @@ class master3_j4InstallerScript
             }
         }
 
+        if (empty($copyFiles)) {
+            return true;
+        }
+
         return $installer->copyFiles($copyFiles);
     }
 
