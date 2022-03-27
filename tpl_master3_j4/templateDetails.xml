@@ -23,7 +23,7 @@
         </span>
     ]]></description>
     <php_minimum>7.2</php_minimum>
-    <uikit_actual>3.13.1</uikit_actual>
+    <uikit_actual>3.13.4</uikit_actual>
     <scriptfile>script.php</scriptfile>
 
     <files>
