@@ -32,7 +32,7 @@ $htag    = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam        = Associations::isEnabled() && $params->get('show_associations');
-$currentDate       = Factory::getDate()->format(Text::_('DATE_FORMAT_LC6'));
+$currentDate       = Factory::getDate()->format('Y-m-d H:i:s');
 $isNotPublishedYet = $this->item->publish_up > $currentDate;
 $isExpired         = !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
 $accessView        = $params->get('access-view');
@@ -108,7 +108,7 @@ $accessView        = $params->get('access-view');
             echo $this->item->toc;
         }
 
-        echo '<div itemprop="articleBody" class="uk-article-body">'. $this->item->text . '</div>';
+        echo '<div itemprop="articleBody" class="uk-article-body">' . $this->item->text . '</div>';
 
         if ($useDefList && $info == 1) {
             echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'below'));

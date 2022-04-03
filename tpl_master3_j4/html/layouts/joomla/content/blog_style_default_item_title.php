@@ -19,7 +19,7 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
 $params  = $displayData->params;
 $canEdit = $displayData->params->get('access-edit');
 
-$currentDate = Factory::getDate()->format(Text::_('DATE_FORMAT_LC6'));
+$currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 ?>
 <?php if ($displayData->state == 0 || $params->get('show_title') || ($params->get('show_author') && !empty($displayData->author))) { ?>
     <div class="page-header">

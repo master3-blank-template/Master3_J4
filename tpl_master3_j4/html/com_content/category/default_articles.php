@@ -78,7 +78,7 @@ if (!empty($this->items)) {
     }
 }
 
-$currentDate = Factory::getDate()->format(Text::_('DATE_FORMAT_LC6'));
+$currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 ?>
 
 <form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm" class="com-content-category__articles">
@@ -161,8 +161,8 @@ $currentDate = Factory::getDate()->format(Text::_('DATE_FORMAT_LC6'));
             </div>
         <?php } ?>
     <?php } else { ?>
-        <table class="com-content-category__table category uk-table uk-table-striped uk-table-hover">
-            <caption class="visually-hidden">
+        <table class="com-content-category__table category uk-table uk-table-striped uk-table-hover uk-table-divider">
+            <caption class="visually-hidden uk-hidden">
                 <?php echo Text::_('COM_CONTENT_ARTICLES_TABLE_CAPTION'); ?>
             </caption>
             <?php if ($this->params->get('show_headings')) { ?>
@@ -215,7 +215,7 @@ $currentDate = Factory::getDate()->format(Text::_('DATE_FORMAT_LC6'));
                         <?php } else { ?>
                         <tr class="cat-list-row<?php echo $i % 2; ?>">
                         <?php } ?>
-                        <th class="list-title" scope="row">
+                        <td class="list-title" scope="row">
                             <?php if (in_array($article->access, $this->user->getAuthorisedViewLevels())) { ?>
                                 <a href="<?php echo Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)); ?>">
                                     <?php echo $this->escape($article->title); ?>
@@ -284,7 +284,7 @@ $currentDate = Factory::getDate()->format(Text::_('DATE_FORMAT_LC6'));
                                     </span>
                                 </div>
                             <?php } ?>
-                        </th>
+                        </td>
                         <?php if ($this->params->get('list_show_date')) { ?>
                             <td class="list-date small">
                                 <?php

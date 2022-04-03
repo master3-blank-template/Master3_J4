@@ -51,7 +51,11 @@ foreach ($fields as $field) {
 
     $class = trim($field->name . ' ' . $field->params->get('render_class'));
     $layout = $field->params->get('layout', 'render');
-    $content = FieldsHelper::render($context, 'field.' . $layout, array('field' => $field, 'class' => $class));
+    $content = FieldsHelper::render(
+        $context,
+        'field.' . $layout,
+        array('field' => $field, 'class' => $class)
+    );
 
     if (trim($content) === '') {
         continue;

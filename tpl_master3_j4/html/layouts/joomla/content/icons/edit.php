@@ -24,7 +24,7 @@ $tooltip = $displayData['tooltip'];
 $nowDate = strtotime(Factory::getDate());
 
 $icon = $article->state ? 'edit' : 'eye-slash';
-$currentDate   = Factory::getDate()->format(Text::_('DATE_FORMAT_LC6'));
+$currentDate   = Factory::getDate()->format('Y-m-d H:i:s');
 $isUnpublished = ($article->publish_up > $currentDate)
     || !is_null($article->publish_down) && ($article->publish_down < $currentDate);
 

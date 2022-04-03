@@ -29,7 +29,7 @@ $info    = $params->get('info_block_position', 0);
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 
-$currentDate   = Factory::getDate()->format(Text::_('DATE_FORMAT_LC6'));
+$currentDate   = Factory::getDate()->format('Y-m-d H:i:s');
 $isUnpublished = ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED || $this->item->publish_up > $currentDate)
     || ($this->item->publish_down < $currentDate && $this->item->publish_down !== null);
 

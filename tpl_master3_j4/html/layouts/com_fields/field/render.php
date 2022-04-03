@@ -11,13 +11,14 @@
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 
 if (!array_key_exists('field', $displayData)) {
     return;
 }
 
 $field = $displayData['field'];
-$class = $displayData['class'];
+$class = $displayData['class'] ?? '';
 $label = Text::_($field->label);
 $value = $field->value;
 $showLabel = $field->params->get('showlabel');
@@ -30,16 +31,31 @@ if ($value == '') {
     return;
 }
 
-?>
-<?php if ($showLabel == 1) { ?>
-    <dt class="field-label <?php echo $labelClass; ?>"><?php echo htmlentities($label, ENT_QUOTES | ENT_IGNORE, 'UTF-8'); ?>: </dt>
-<?php } ?>
-<dd class="field-value <?php echo $valueClass; ?>">
-    <?php if ($prefix) { ?>
-        <span class="field-prefix"><?php echo htmlentities($prefix, ENT_QUOTES | ENT_IGNORE, 'UTF-8'); ?></span>
-    <?php } ?>
-    <span><?php echo $value; ?></span>
-    <?php if ($suffix) { ?>
-        <span class="field-suffix"><?php echo htmlentities($suffix, ENT_QUOTES | ENT_IGNORE, 'UTF-8'); ?></span>
-    <?php } ?>
-</dd>
+if ($showLabel == 1) {
+    echo '<dt class="field-label ' . $labelClass . '">' . htmlentities($label, ENT_QUOTES | ENT_IGNORE, 'UTF-8') . ': </dt>';
+}
+
+if ($field->type == 'media') {
+    echo '<figure class="uk-width">';
+    $layoutAttr = [
+        'src'      => $field->rawvalue['imagefile'],
+        'itemprop' => 'image',
+        'alt'      => empty($images->image_fulltext_alt) && empty($images->image_fulltext_alt_empty) ? false : $images->image_fulltext_alt,
+        'width'    => '100%'
+    ];
+    echo LayoutHelper::render('joomla.html.image', $layoutAttr);
+    if ($field->rawvalue['alt_text'] !== '') {
+        echo '<figcaption class="caption">' . $this->escape($field->rawvalue['alt_text']) . '</figcaption>';
+    }
+    echo '</figure>';
+} else {
+    echo '<dd class="field-value ' .  $valueClass . '">';
+    if ($prefix) {
+        echo '<span class="field-prefix">' . htmlentities($prefix, ENT_QUOTES | ENT_IGNORE, 'UTF-8') . '</span>';
+    }
+    echo '<span>' .  $value . '</span>';
+    if ($suffix) {
+        echo '<span class="field-suffix">' . htmlentities($suffix, ENT_QUOTES | ENT_IGNORE, 'UTF-8') . '</span>';
+    }
+    echo '</dd>';
+}
